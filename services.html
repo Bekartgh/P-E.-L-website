@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | Possible Energy Limited</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --gold: #FFC107; --dark: #050505; --white: #ffffff; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: sans-serif; }
+        
+        body { 
+            background: var(--dark); 
+            color: white; 
+            overflow-x: hidden; 
+            font-family: sans-serif;
+        }
+
+        /* Stylized Text Branding */
+        .brand-text {
+            text-decoration: none;
+            color: white;
+            font-weight: 900;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+        .brand-text span {
+            color: var(--gold);
+            display: block;
+            font-size: 9px;
+            letter-spacing: 4px;
+            margin-top: 5px;
+            font-weight: 700;
+        }
+
+        nav { 
+            position: fixed; top: 0; width: 100%; 
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); 
+            padding: 15px 8%; display: flex; justify-content: space-between; 
+            align-items: center; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); 
+        }
+
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav a { text-decoration: none; color: white; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        nav a:hover { color: var(--gold); }
+
+        /* SERVICES PANELS */
+        .services-wrapper { display: flex; height: 100vh; width: 100vw; overflow: hidden; background: #000; }
+        .service-panel { position: relative; flex: 1; height: 100%; transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); display: flex; align-items: center; justify-content: center; border-right: 1px solid rgba(255,255,255,0.05); cursor: pointer; overflow: hidden; }
+        .panel-1 { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('images/petroleum-supply.jpg') center/cover; }
+        .panel-2 { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('images/fuel-storage.jpg') center/cover; }
+        .panel-3 { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('images/lubricants.jpg') center/cover; }
+        .panel-4 { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('images/irrigation-equipment.jpg') center/cover; }
+        .panel-5 { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('images/agriculture-machinery.jpg') center/cover; }
+
+        .service-panel:hover { flex: 5; filter: brightness(1.2); }
+        .panel-content { text-align: center; padding: 40px; z-index: 2; width: 500px; }
+        .panel-content h2 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 25px; transition: 0.5s; }
+        .service-panel:hover .panel-content h2 { color: var(--gold); font-size: 2.8rem; letter-spacing: 2px; }
+        .panel-content p { opacity: 0; transform: translateY(30px); transition: 0.6s ease; color: #ccc; line-height: 1.8; }
+        .service-panel:hover .panel-content p { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+
+        .btn-explore { margin-top: 35px; padding: 15px 35px; background: transparent; border: 1px solid var(--gold); color: var(--gold); text-transform: uppercase; font-size: 11px; font-weight: 800; letter-spacing: 2px; display: inline-block; text-decoration: none; opacity: 0; transform: translateY(20px); transition: 0.5s; cursor: pointer; }
+        .service-panel:hover .btn-explore { opacity: 1; transform: translateY(0); transition-delay: 0.5s; }
+        .btn-explore:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(255, 193, 7, 0.4); }
+
+        /* LUBRICANT CATALOG MODAL */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .catalog-modal { background: #0a0a0a; border: 1px solid rgba(255, 193, 7, 0.2); width: 90%; max-width: 1100px; max-height: 85vh; padding: 60px; overflow-y: auto; position: relative; }
+        .close-catalog { position: absolute; top: 30px; right: 30px; color: var(--gold); font-size: 24px; cursor: pointer; }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 40px; }
+        .product-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 30px; }
+        .product-card h4 { color: var(--gold); font-size: 12px; text-transform: uppercase; margin-bottom: 10px; }
+        .spec-list { list-style: none; margin-top: 15px; font-size: 11px; color: rgba(255,255,255,0.5); }
+        .spec-list li { border-top: 1px solid rgba(255,255,255,0.05); padding: 8px 0; display: flex; justify-content: space-between; }
+        .spec-list span { color: #fff; }
+
+        @media (max-width: 1000px) {
+            .services-wrapper { flex-direction: column; height: auto; }
+            .service-panel { height: 400px; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="brand-text">
+        POSSIBLE <span>ENERGY LIMITED</span>
+    </a>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html" style="color:var(--gold)">Services</a></li>
+        <li><a href="projects.html">Portfolio</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
+
+<div class="services-wrapper">
+    <div class="service-panel panel-1">
+        <div class="panel-content">
+            <h2>Petroleum Supply</h2>
+            <p>Bulk delivery of high-grade diesel and gasoline. Fueling Ghana’s most demanding mining and construction sectors.</p>
+            <a href="contact.html" class="btn-explore">Request Quote</a>
+        </div>
+    </div>
+
+    <div class="service-panel panel-2">
+        <div class="panel-content">
+            <h2>Fuel Storage</h2>
+            <p>On-site strategic reservoir installation. We provide the hardware to ensure your fleet never runs dry.</p>
+            <a href="contact.html" class="btn-explore">Consult Engineer</a>
+        </div>
+    </div>
+
+    <div class="service-panel panel-3">
+        <div class="panel-content">
+            <h2>Lubricants</h2>
+            <p>High-performance industrial oils designed to maximize the lifespan of heavy-duty machinery.</p>
+            <a href="javascript:void(0)" onclick="openCatalog()" class="btn-explore">View Catalog</a>
+        </div>
+    </div>
+
+    <div class="service-panel panel-4">
+        <div class="panel-content">
+            <h2>Smart Irrigation</h2>
+            <p>Advanced solar pumping systems for commercial farming, enabling year-round high-yield production.</p>
+            <a href="projects.html" class="btn-explore">Explore Sites</a>
+        </div>
+    </div>
+
+    <div class="service-panel panel-5">
+        <div class="panel-content">
+            <h2>Modern Machinery</h2>
+            <p>Direct supply of Mahindra tractors and tools to revolutionize land preparation and harvest.</p>
+            <a href="contact.html" class="btn-explore">Inquire Now</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="catalogModal">
+    <div class="catalog-modal">
+        <i class="fas fa-times close-catalog" onclick="closeCatalog()"></i>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px;">
+            <div>
+                <p style="color:var(--gold); font-size:10px; text-transform:uppercase; letter-spacing:3px; font-weight:800;">Technical Portfolio</p>
+                <h2 style="font-size: 2rem; font-weight: 900;">Industrial Lubricants</h2>
+            </div>
+            <div class="brand-text" style="opacity: 0.2;">
+                POSSIBLE <span>ENERGY LIMITED</span>
+            </div>
+        </div>
+
+        <div class="catalog-grid">
+            <div class="product-card">
+                <h4>Heavy-Duty Diesel</h4>
+                <ul class="spec-list">
+                    <li>SAE Grade: <span>15W-40</span></li>
+                    <li>API: <span>CK-4 / SN</span></li>
+                </ul>
+            </div>
+            <div class="product-card">
+                <h4>Gear & Transmission</h4>
+                <ul class="spec-list">
+                    <li>ISO Grade: <span>220 / 320</span></li>
+                    <li>Spec: <span>DIN 51517-3</span></li>
+                </ul>
+            </div>
+            <div class="product-card">
+                <h4>Hydraulic Fluids</h4>
+                <ul class="spec-list">
+                    <li>Viscosity: <span>ISO 46 / 68</span></li>
+                    <li>Standard: <span>Eaton M-2950</span></li>
+                </ul>
+            </div>
+            <div class="product-card">
+                <h4>Industrial Greases</h4>
+                <ul class="spec-list">
+                    <li>NLGI: <span>Grade 2 / 3</span></li>
+                    <li>Temp: <span>260°C Peak</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; text-align: center;">
+            <a href="contact.html" class="btn-explore" style="opacity: 1; transform: none;">Request Technical Data Sheets</a>
+        </div>
+    </div>
+</div>
+
+<footer style="padding: 60px 0; text-align: center; background: #000; border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center;">
+    <div class="brand-text" style="opacity: 0.5; margin-bottom: 20px;">
+        POSSIBLE <span>ENERGY LIMITED</span>
+    </div>
+    <div style="color: rgba(255,255,255,0.2); font-size: 9px; letter-spacing: 4px; text-transform: uppercase;">
+        © 2026 POSSIBLE ENERGY LIMITED. AN INDUSTRIAL STANDARD.
+    </div>
+</footer>
+
+<script>
+    function openCatalog() {
+        document.getElementById('catalogModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+    function closeCatalog() {
+        document.getElementById('catalogModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    window.onclick = function(event) {
+        let modal = document.getElementById('catalogModal');
+        if (event.target == modal) closeCatalog();
+    }
+</script>
+</body>
+</html>

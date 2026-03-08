@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Possible Energy Limited</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --gold: #B89650; 
+            --text-main: #ffffff;
+            --white-glass: rgba(255, 255, 255, 0.05);
+            --border-glass: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Text Branding Style */
+        .brand-text { text-decoration: none; color: white; font-weight: 900; letter-spacing: 2px; font-size: 1.2rem; line-height: 1; text-transform: uppercase; }
+        .brand-text span { color: var(--gold); display: block; font-size: 9px; letter-spacing: 4px; margin-top: 5px; font-weight: 700; }
+
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background: url('images/tanker-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 10, 12, 0.85); 
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px);
+            z-index: -1;
+        }
+
+        nav { 
+            position: fixed; top: 0; width: 100%; 
+            background: rgba(10, 10, 12, 0.95); backdrop-filter: blur(15px); 
+            padding: 25px 8%; display: flex; justify-content: space-between; 
+            align-items: center; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        nav a { text-decoration: none; color: rgba(255,255,255,0.6); font-size: 11px; font-weight: 700; text-transform: uppercase; margin-left: 30px; transition: 0.3s; }
+        nav a:hover, nav a.active { color: var(--gold); }
+
+        .container { padding: 160px 8% 100px; max-width: 1400px; margin: 0 auto; position: relative; }
+
+        /* CALCULATOR */
+        .industrial-optimizer {
+            background: rgba(20, 20, 22, 0.75);
+            border: 1px solid var(--border-glass);
+            padding: 50px;
+            margin-bottom: 80px;
+            backdrop-filter: blur(25px);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            border-radius: 4px;
+        }
+
+        .mode-toggle { display: flex; gap: 10px; margin-bottom: 40px; background: rgba(255,255,255,0.05); padding: 5px; width: fit-content; border-radius: 2px; }
+        .mode-btn { padding: 10px 20px; border: none; background: transparent; color: #fff; font-size: 10px; font-weight: 800; text-transform: uppercase; cursor: pointer; transition: 0.3s; opacity: 0.5; }
+        .mode-btn.active { background: var(--gold); color: #000; opacity: 1; }
+
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); margin-bottom: 10px; }
+        .input-group input {
+            width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass);
+            padding: 15px; color: #fff; font-size: 1.1rem; outline: none; border-bottom: 2px solid var(--gold);
+        }
+
+        .results-panel { background: rgba(255,255,255,0.02); padding: 40px; display: flex; flex-direction: column; justify-content: center; border-left: 1px solid var(--border-glass); }
+        .res-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.4); }
+        .res-value { font-size: 3rem; font-weight: 900; margin: 15px 0; color: #fff; }
+
+        /* BLOG STYLE */
+        .blog-header { margin-bottom: 60px; }
+        .blog-header h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; }
+        .featured-post { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 80px; }
+        .featured-img { width: 100%; height: 500px; object-fit: cover; border-radius: 4px; }
+
+        /* --- THE ANALYSIS DRAWER --- */
+        #analysisDrawer {
+            display: none;
+            grid-column: 1 / -1;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-glass);
+            padding: 60px;
+            margin-top: -40px;
+            margin-bottom: 80px;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .analysis-text { columns: 2; column-gap: 60px; color: rgba(255,255,255,0.8); line-height: 1.8; font-size: 1rem; }
+        .analysis-text p { margin-bottom: 20px; }
+        .analysis-text strong { color: var(--gold); }
+
+        @media (max-width: 900px) {
+            .industrial-optimizer, .featured-post { grid-template-columns: 1fr; }
+            .results-panel { border-left: none; border-top: 1px solid var(--border-glass); margin-top: 30px; }
+            .analysis-text { columns: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="brand-text">POSSIBLE <span>ENERGY LIMITED</span></div>
+        <div>
+            <a href="index.html">Identity</a>
+            <a href="about.html">Leadership</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="blog-header">
+            <p style="color:var(--gold); font-size:11px; text-transform:uppercase; letter-spacing:5px; font-weight:800; margin-bottom:15px;">Industrial Briefing</p>
+            <h1>Intelligence & ROI</h1>
+        </header>
+
+        <section class="industrial-optimizer">
+            <div>
+                <div class="mode-toggle">
+                    <button id="btn-fuel" class="mode-btn active" onclick="switchMode('fuel')">Energy Logistics</button>
+                    <button id="btn-agro" class="mode-btn" onclick="switchMode('agro')">Agro-Mechanization</button>
+                </div>
+                <div id="fuel-fields">
+                    <div class="input-group"><label>Monthly Fuel Volume (Liters)</label><input type="number" id="f-vol" placeholder="e.g. 50000" oninput="runCalc()"></div>
+                    <div class="input-group"><label>Current Market Price (GHS/L)</label><input type="number" id="f-price" placeholder="e.g. 15.50" oninput="runCalc()"></div>
+                </div>
+                <div id="agro-fields" style="display: none;">
+                    <div class="input-group"><label>Monthly Manual/Diesel Costs</label><input type="number" id="a-cost" placeholder="e.g. 12000" oninput="runCalc()"></div>
+                    <div class="input-group"><label>Current Yield Capacity (Metric Tons)</label><input type="number" id="a-yield" placeholder="e.g. 50" oninput="runCalc()"></div>
+                </div>
+            </div>
+            <div class="results-panel">
+                <span id="label-primary" class="res-label">Annual Capital Recovery</span>
+                <div id="val-primary" class="res-value">0.00 <span style="font-size: 1rem; opacity: 0.4;">GHS</span></div>
+                <span class="res-label">Estimated Efficiency Surge</span>
+                <div id="val-efficiency" style="font-size: 1.5rem; font-weight: 700; color: var(--gold); margin-top: 5px;">0%</div>
+                <a href="contact.html" style="margin-top: 40px; display: block; text-align: center; border: 1px solid var(--gold); padding: 15px; color: var(--gold); text-decoration: none; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Request Technical Audit</a>
+            </div>
+        </section>
+
+        <article class="featured-post">
+            <img src="images/fuel-storage.jpg" alt="Fuel Infrastructure" class="featured-img">
+            <div>
+                <span style="color:var(--gold); font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:3px; display:block; margin-bottom:20px;">Safety • Operations</span>
+                <h2 style="font-size: 2.5rem; font-weight: 900; line-height: 1.1; margin-bottom:30px;">Navigating Ghana’s Industrial Fuel Challenges</h2>
+                <p style="color: rgba(255,255,255,0.7); font-size: 1.1rem; line-height: 1.8; margin-bottom: 40px; font-weight: 300;">
+                    In the tropical climate of Ghana, petroleum storage presents unique challenges. High ambient temperatures increase evaporation rates and pressure build-up. We examine how Possible Energy's strategic infrastructure mitigates these risks.
+                </p>
+                <button onclick="toggleAnalysis()" id="analysisBtn" style="padding: 18px 40px; background: transparent; border: 1px solid var(--gold); color: #fff; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; cursor: pointer;">Read Full Analysis</button>
+            </div>
+        </article>
+
+        <section id="analysisDrawer">
+            <h3 style="font-size: 1.5rem; color: var(--gold); margin-bottom: 40px; text-transform: uppercase;">Technical Site Audit: Thermal Regulation</h3>
+            <div class="analysis-text">
+                <p>
+                    <strong>Thermal Expansion & Loss:</strong> Ghana's average daytime temperature can lead to significant thermal expansion in surface-level storage tanks. Without high-reflectivity coatings and precision pressure-vacuum vents, industrial operators can lose up to 1.5% of their bulk diesel stock to evaporation alone.
+                </p>
+                <p>
+                    <strong>Possible Energy's Solution:</strong> We utilize dual-wall underground reservoirs and shaded surface-mounted systems that maintain a stable core temperature. This stabilization preserves the fuel's chemical integrity and prevents the sludge buildup common in overheated tanks.
+                </p>
+                <p>
+                    <strong>Contamination Control:</strong> High humidity environments are breeding grounds for microbial growth in diesel. Our strategic analysis shows that a "seal-and-circulate" filtration system reduces engine injector failure by 40% over a 12-month period in mining environments.
+                </p>
+                <div class="brand-text" style="opacity: 0.2; margin-top: 20px;">
+                    POSSIBLE <span>ENERGY LIMITED | REPORT 2026</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function toggleAnalysis() {
+            const drawer = document.getElementById('analysisDrawer');
+            const btn = document.getElementById('analysisBtn');
+            if (drawer.style.display === "block") {
+                drawer.style.display = "none";
+                btn.innerText = "Read Full Analysis";
+            } else {
+                drawer.style.display = "block";
+                btn.innerText = "Close Analysis";
+                drawer.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        let mode = 'fuel';
+        function switchMode(newMode) {
+            mode = newMode;
+            document.getElementById('btn-fuel').classList.toggle('active', mode === 'fuel');
+            document.getElementById('btn-agro').classList.toggle('active', mode === 'agro');
+            document.getElementById('fuel-fields').style.display = mode === 'fuel' ? 'block' : 'none';
+            document.getElementById('agro-fields').style.display = mode === 'agro' ? 'block' : 'none';
+            document.getElementById('label-primary').innerText = mode === 'fuel' ? 'Annual Capital Recovery' : 'Annual Mechanization Gain';
+            runCalc();
+        }
+
+        function runCalc() {
+            let annual = 0; let efficiency = 0;
+            if (mode === 'fuel') {
+                const v = parseFloat(document.getElementById('f-vol').value) || 0;
+                const p = parseFloat(document.getElementById('f-price').value) || 0;
+                efficiency = 4.8; 
+                annual = (v * p * 0.048) * 12;
+            } else {
+                const c = parseFloat(document.getElementById('a-cost').value) || 0;
+                efficiency = 35.0; 
+                annual = (c * 0.35) * 12;
+            }
+            document.getElementById('val-primary').innerHTML = annual.toLocaleString(undefined, {minimumFractionDigits: 2}) + ' <span style="font-size: 1rem; opacity: 0.4;">GHS</span>';
+            document.getElementById('val-efficiency').innerText = efficiency + '%';
+        }
+    </script>
+</body>
+</html>
