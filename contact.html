@@ -35,7 +35,6 @@
             z-index: -1;
         }
 
-        /* --- NAVIGATION & TEXT BRANDING --- */
         nav { 
             position: fixed; top: 0; width: 100%; 
             background: rgba(10, 10, 12, 0.9); backdrop-filter: blur(15px); 
@@ -65,7 +64,6 @@
         nav a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 11px; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
         nav a:hover, nav a.active { color: var(--gold); }
 
-        /* --- CONTENT LAYOUT --- */
         .container { padding: 180px 8% 100px; max-width: 1300px; margin: 0 auto; }
 
         .contact-wrapper {
@@ -179,23 +177,25 @@
             </section>
 
             <section class="form-pane">
-                <div class="field-group">
-                    <label>Principal Name</label>
-                    <input type="text" placeholder="Full Name">
-                </div>
-                <div class="field-group">
-                    <label>Corporate Email</label>
-                    <input type="email" placeholder="example@company.com">
-                </div>
-                <div class="field-group">
-                    <label>Sector of Interest</label>
-                    <input type="text" placeholder="e.g., Petroleum Supply / Agro-Tech">
-                </div>
-                <div class="field-group">
-                    <label>Detailed Message</label>
-                    <textarea rows="4" placeholder="Outline your requirements..."></textarea>
-                </div>
-                <button class="submit-btn">Initialize Consultation</button>
+                <form action="mailto:possibleenergyltd@gmail.com" method="post" enctype="text/plain">
+                    <div class="field-group">
+                        <label>Principal Name</label>
+                        <input type="text" name="Principal_Name" placeholder="Full Name" required>
+                    </div>
+                    <div class="field-group">
+                        <label>Corporate Email</label>
+                        <input type="email" name="Corporate_Email" placeholder="example@company.com" required>
+                    </div>
+                    <div class="field-group">
+                        <label>Sector of Interest</label>
+                        <input type="text" name="Sector_of_Interest" placeholder="e.g., Petroleum Supply / Agro-Tech">
+                    </div>
+                    <div class="field-group">
+                        <label>Detailed Message</label>
+                        <textarea name="Message" rows="4" placeholder="Outline your requirements..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Initialize Consultation</button>
+                </form>
             </section>
         </div>
     </div>
