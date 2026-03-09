@@ -84,9 +84,7 @@
         .detail-text h4 { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.4); margin-bottom: 5px; }
         .detail-text p { font-size: 1.1rem; font-weight: 600; color: #fff; }
 
-        .social-wrap { margin-top: 50px; }
-        .social-wrap h4 { font-size: 10px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; opacity: 0.3; }
-        .social-icons { display: flex; gap: 12px; }
+        .social-icons { display: flex; gap: 12px; margin-top: 30px; }
         .social-icons a { 
             width: 40px; height: 40px; border: 1px solid var(--glass-border); background: var(--glass-panel);
             display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none;
@@ -114,6 +112,19 @@
             cursor: pointer; transition: 0.4s;
         }
         .submit-btn:hover { background: #fff; letter-spacing: 6px; }
+        .submit-btn:disabled { opacity: 0.6; cursor: wait; }
+
+        #form-status {
+            margin-top: 20px;
+            padding: 15px;
+            text-align: center;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: none;
+        }
+        .success { display: block !important; color: #2ecc71; border: 1px solid #2ecc71; background: rgba(46, 204, 113, 0.1); }
+        .error { display: block !important; color: #e74c3c; border: 1px solid #e74c3c; background: rgba(231, 76, 60, 0.1); }
 
         @media (max-width: 1000px) { .contact-wrapper { grid-template-columns: 1fr; } .info-col h1 { font-size: 3rem; } }
     </style>
@@ -121,9 +132,7 @@
 <body>
 
     <nav>
-        <a href="index.html" class="brand-text">
-            POSSIBLE <span>ENERGY LIMITED</span>
-        </a>
+        <a href="index.html" class="brand-text">POSSIBLE <span>ENERGY LIMITED</span></a>
         <ul>
             <li><a href="index.html">Identity</a></li>
             <li><a href="about.html">Leadership</a></li>
@@ -142,42 +151,27 @@
 
                 <div class="contact-detail">
                     <div class="icon-box"><i class="fas fa-location-dot"></i></div>
-                    <div class="detail-text">
-                        <h4>Headquarters</h4>
-                        <p>Tema, Ghana</p>
-                    </div>
+                    <div class="detail-text"><h4>Headquarters</h4><p>Tema, Ghana</p></div>
                 </div>
-
                 <div class="contact-detail">
                     <div class="icon-box"><i class="fas fa-phone"></i></div>
-                    <div class="detail-text">
-                        <h4>Direct Operations</h4>
-                        <p>+233 24 469 5844</p>
-                    </div>
+                    <div class="detail-text"><h4>Direct Operations</h4><p>+233 24 469 5844</p></div>
                 </div>
-
                 <div class="contact-detail">
                     <div class="icon-box"><i class="fas fa-envelope-open-text"></i></div>
-                    <div class="detail-text">
-                        <h4>Email Correspondence</h4>
-                        <p>possibleenergyltd@gmail.com</p>
-                    </div>
+                    <div class="detail-text"><h4>Email Correspondence</h4><p>possibleenergyltd@gmail.com</p></div>
                 </div>
 
-                <div class="social-wrap">
-                    <h4>Global Connectivity</h4>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-x-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://wa.me/233244695844" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                    </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/233244695844" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </section>
 
             <section class="form-pane">
-                <form id="contact-form" action="https://formspree.io/f/possibleenergyltd@gmail.com" method="POST">
+                <form id="contact-form" action="https://formspree.io/f/xgonoqoz" method="POST">
                     <div class="field-group">
                         <label>Principal Name</label>
                         <input type="text" name="name" placeholder="Full Name" required>
@@ -195,52 +189,44 @@
                         <textarea name="message" rows="4" placeholder="Outline your requirements..." required></textarea>
                     </div>
                     <button type="submit" id="submit-btn" class="submit-btn">Initialize Consultation</button>
+                    <div id="form-status"></div>
                 </form>
             </section>
         </div>
     </div>
 
     <script>
-        const form = document.getElementById('contact-form');
-        const btn = document.getElementById('submit-btn');
+        const form = document.getElementById("contact-form");
+        const btn = document.getElementById("submit-btn");
+        const status = document.getElementById("form-status");
 
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Visual feedback
-            btn.innerHTML = "ESTABLISHING CONNECTION...";
-            btn.style.opacity = "0.7";
+        form.addEventListener("submit", async function(event) {
+            event.preventDefault();
             btn.disabled = true;
-
-            const formData = new FormData(form);
+            btn.innerHTML = "ESTABLISHING CONNECTION...";
             
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-
+            const data = new FormData(event.target);
+            fetch(event.target.action, {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
                 if (response.ok) {
-                    btn.innerHTML = "TRANSMISSION SUCCESSFUL";
-                    btn.style.background = "#2ecc71"; // Green for success
-                    btn.style.color = "#fff";
+                    status.innerHTML = "TRANSMISSION SUCCESSFUL. WE WILL BE IN TOUCH.";
+                    status.className = "success";
+                    btn.innerHTML = "CONSULTATION INITIALIZED";
                     form.reset();
-                    setTimeout(() => {
-                        btn.innerHTML = "INITIALIZE CONSULTATION";
-                        btn.style.background = "var(--gold)";
-                        btn.style.color = "#000";
-                        btn.style.opacity = "1";
-                        btn.disabled = false;
-                    }, 5000);
                 } else {
-                    throw new Error();
+                    status.innerHTML = "ERROR. PLEASE TRY AGAIN.";
+                    status.className = "error";
+                    btn.disabled = false;
+                    btn.innerHTML = "INITIALIZE CONSULTATION";
                 }
-            } catch (error) {
-                btn.innerHTML = "CONNECTION FAILED - TRY AGAIN";
-                btn.style.background = "#e74c3c"; // Red for error
+            }).catch(error => {
+                status.innerHTML = "NETWORK ERROR. PLEASE TRY AGAIN.";
+                status.className = "error";
                 btn.disabled = false;
-            }
+            });
         });
     </script>
 </body>
